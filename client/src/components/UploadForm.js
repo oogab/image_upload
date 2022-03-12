@@ -26,7 +26,7 @@ const UploadForm = () => {
     formData.append("image", file);
     try {
       const res = await axios.post("/upload", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: { "Content-Type": "multi-part/form" },
         onUploadProgress: (e) => {
           setPercent(Math.round((100 * e.loaded) / e.total));
         },
@@ -54,7 +54,7 @@ const UploadForm = () => {
       <ProgressBar percent={percent} />
       <div className="file-dropper">
         {fileName}
-        <input id="image" type="file" accept="image/*" onChange={imageSelectHandler} />
+        <input id="image" type="file" onChange={imageSelectHandler} />
       </div>
       <button
         type="submit"
