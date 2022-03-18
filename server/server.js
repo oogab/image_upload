@@ -5,6 +5,9 @@ const mime = require("mime-types");
 const cors = require("cors");
 const mongoose = require('mongoose')
 
+require('dotenv').config()
+// console.log(process.env)
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "./uploads"),
   filename: (req, file, cb) =>
@@ -34,7 +37,7 @@ const app = express();
 const PORT = 5001;
 
 mongoose
-  .connect("mongodb+srv://oogab:henge@imageupload.t3axg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB Connected.")
     app.use(express.json());
