@@ -4,6 +4,8 @@ const { v4: uuid } = require("uuid");
 const mime = require("mime-types");
 const cors = require("cors");
 const mongoose = require('mongoose')
+const Image = require('./models/Image')
+// const Image = mongoose.model("image")
 
 require('dotenv').config()
 // console.log(process.env)
@@ -44,8 +46,9 @@ mongoose
     app.use(cors());
     app.use("/uploads", express.static("uploads"));
     
-    app.post("/upload", upload.single("image"), (req, res) => {
+    app.post("/upload", upload.single("image"), async (req, res) => {
       console.log(req.file);
+      await new Image({ key: req.file.filename, originalFileName: req.file.originalname}).save()
       res.json(req.file);
     });
     
