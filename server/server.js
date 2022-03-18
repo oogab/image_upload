@@ -46,12 +46,20 @@ mongoose
     app.use(cors());
     app.use("/uploads", express.static("uploads"));
     
-    app.post("/upload", upload.single("image"), async (req, res) => {
+    app.post("/images", upload.single("image"), async (req, res) => {
       console.log(req.file);
-      await new Image({ key: req.file.filename, originalFileName: req.file.originalname}).save()
-      res.json(req.file);
+      const image = await new Image({
+        key: req.file.filename,
+        originalFileName: req.file.originalname
+      }).save()
+      res.json(image);
     });
     
+    app.get("/images", async (req, res) => {
+      const images = await Image.find()
+      res.json(images) 
+    })
+
     app.listen(PORT, () => console.log("Express server listening on PORT " + PORT));    
   })
   .catch((err) => console.log(err))
