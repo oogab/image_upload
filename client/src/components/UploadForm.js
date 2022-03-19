@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "./UploadForm.css";
 import ProgressBar from "./ProgressBar";
+import { ImageContext } from "../context/ImageContext";
 
-const UploadForm = ({ images, setImages }) => {
-  const defaultFileName = "이미지 파일을 업로드 해주세요."
+const UploadForm = () => {
+  const [images, setImages] = useContext(ImageContext);
+
+  const defaultFileName = "이미지 파일을 업로드 해주세요.";
   const [file, setFile] = useState(null);
-  const [imgSrc, setImageSrc] = useState(null)
+  const [imgSrc, setImageSrc] = useState(null);
   const [fileName, setFileName] = useState(defaultFileName);
   const [percent, setPercent] = useState(0);
 
@@ -15,9 +18,9 @@ const UploadForm = ({ images, setImages }) => {
     const imageFile = event.target.files[0];
     setFile(imageFile);
     setFileName(imageFile.name);
-    const fileReader = new FileReader()
-    fileReader.readAsDataURL(imageFile)
-    fileReader.onload = e => setImageSrc(e.target.result)
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(imageFile);
+    fileReader.onload = (e) => setImageSrc(e.target.result);
   };
 
   const onSubmit = async (e) => {
@@ -31,18 +34,18 @@ const UploadForm = ({ images, setImages }) => {
           setPercent(Math.round((100 * e.loaded) / e.total));
         },
       });
-      setImages([...images, res.data])
+      setImages([...images, res.data]);
       toast.success("이미지 업로드 성공!");
       setTimeout(() => {
-        setPercent(0)
-        setFileName(defaultFileName)
-        setImageSrc(null)
-      }, 3000)
+        setPercent(0);
+        setFileName(defaultFileName);
+        setImageSrc(null);
+      }, 3000);
     } catch (err) {
       toast.error(err.message);
-      setPercent(0)
-      setFileName(defaultFileName)
-      setImageSrc(null)
+      setPercent(0);
+      setFileName(defaultFileName);
+      setImageSrc(null);
       console.error(err);
     }
   };
@@ -51,7 +54,10 @@ const UploadForm = ({ images, setImages }) => {
     // form tag에서 submit을 할 경우 default action이 새로고침
     // SPA이기 때문에 새로고침이 생기지 않도록 해야한다.
     <form onSubmit={onSubmit}>
-      <img src={imgSrc} className={`image-preview ${imgSrc && "image-preview-show"}`} />
+      <img
+        src={imgSrc}
+        className={`image-preview ${imgSrc && "image-preview-show"}`}
+      />
       <ProgressBar percent={percent} />
       <div className="file-dropper">
         {fileName}
