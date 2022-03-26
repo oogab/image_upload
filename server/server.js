@@ -10,6 +10,30 @@ const Image = require('./models/Image')
 require('dotenv').config()
 // console.log(process.env)
 
+// Import the functions you need from the SDKs you need
+// import { initializeApp } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
+// const firebaseApp = require('firebase/app')
+// const firebaseAnalytics = require('firebase/analytics')
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// const firebaseConfig = {
+//   apiKey: "AIzaSyC6fUXZTEvcZLm_0BazQ_be5YZssY_lT8k",
+//   authDomain: "henge-dev.firebaseapp.com",
+//   projectId: "henge-dev",
+//   storageBucket: "henge-dev.appspot.com",
+//   messagingSenderId: "152315403028",
+//   appId: "1:152315403028:web:27d7ffe2ddd2ddde89c001",
+//   measurementId: "G-6YX1NGT7SL"
+// };
+
+// Initialize Firebase
+// const app = firebaseApp.initializeApp(firebaseConfig);
+// const analytics = firebaseAnalytics.getAnalytics(app);
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "./uploads"),
   filename: (req, file, cb) =>
